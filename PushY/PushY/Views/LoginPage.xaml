@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PushY.Views.LoginPage">
+    <StackLayout 
+        Margin="10,20,10,70"
+        Padding="10"
+        VerticalOptions="Center">
+        <Entry
+            Text="{Binding NickName}"
+            Keyboard="Text"
+            Placeholder="nickname"/>
+        <Entry
+            Text="{Binding Pwd}"
+            IsPassword="True"
+            Placeholder="password"/>
+        <Button
+            Text="Login"
+            Margin="100,25"
+            Command="{Binding LoginCmd}"/>
+        <Button
+            Text="Register"
+            Margin="120,30"
+            Command="{Binding RegisterCmd}"/>
+    </StackLayout>
+</ContentPage>
