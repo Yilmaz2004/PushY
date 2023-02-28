@@ -1,7 +1,6 @@
 ﻿using PushY.Models;
 using PushY.Views;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;

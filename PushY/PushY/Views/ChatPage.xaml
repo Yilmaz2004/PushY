@@ -1,28 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PushY.Converter"
              x:Class="PushY.Views.ChatPage">
-    <Frame
-        BorderColor="DarkGray"
-        BackgroundColor="Transparent"
-        CornerRadius="10"
-        Margin="10"
-        Padding="10">
-        <ListView
-            VerticalOptions="FillAndExpand"
-            HeightRequest="700"
-            ItemsSource="{Binding UserChatList}"
-            HasUnevenRows="True">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Label
-                            FontSize="30"
-                            Text="{Binding NickName}">
-                        </Label>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Frame>
+    <Page.Resources>
+        <local:IdToAlignmentConverter x:Key="IdToAlignmentConverterKey"></local:IdToAlignmentConverter>
+        <local:IdToBackgroundColor x:Key="IdToBackgroundColerKey"></local:IdToBackgroundColor>
+    </Page.Resources>
+    <Grid
+        RowDefinitions="*, auto"
+        Margin="10">
+        <StackLayout>
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="White"
+                Margin="0"
+                Padding="10">
+                <StackLayout 
+                    Grid.Row="1"
+                    Orientation="Horizontal">
+                    <Button
+                        Text="back"
+                        HeightRequest="40"
+                        Command="{Binding BackCmd}"/>
+                    <Label
+                        FontSize="30"
+                        Text="{Binding NickName}"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <Grid
+            RowDefinitions="auto, auto"
+            Margin="0,75,0,0">
+            <Frame
+                BorderColor="DarkGray"
+                BackgroundColor="Transparent"
+                CornerRadius="10"
+                VerticalOptions="Center"
+                Margin="0,0,0,0"
+                Padding="10">
+                <ListView
+                    VerticalOptions="FillAndExpand"
+                    ItemsSource="{Binding UserChatList}"
+                    HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Frame
+                                        CornerRadius="30"
+                                        Grid.Column="0"
+                                        HorizontalOptions="{Binding From_Id, Converter={StaticResource IdToAlignmentConverterKey}}"
+                                        HasShadow="True"
+                                        Margin="0"
+                                        BackgroundColor="{Binding From_Id, Converter={StaticResource IdToBackgroundColerKey}}"
+                                        Padding="5"
+                                        MinimumWidthRequest="20">
+                                        <Label
+                                            Text="{Binding Message}"
+                                            Margin="10"
+                                            TextColor="White"
+                                            LineBreakMode="WordWrap"/>
+                                    </Frame>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+        </Grid>
+
+        <StackLayout 
+            Grid.Row="1"
+            Orientation="Horizontal">
+            <Entry 
+                Text="{Binding SendMessage}"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Message"/>
+            <Button
+                Text="Send"
+                Command="{Binding SendMessageCmd}"/>
+        </StackLayout>
+    </Grid>
 </ContentPage>

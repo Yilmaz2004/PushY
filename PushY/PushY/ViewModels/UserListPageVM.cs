@@ -12,7 +12,6 @@ namespace PushY.ViewModels
     public class UserListPageVM : ViewModelBase
     {
         public ObservableCollection<UserModel> UserList { get; set; }
-
         public Command LogoutCmd { get; private set; }
         public UserListPageVM()
         {
@@ -27,7 +26,6 @@ namespace PushY.ViewModels
             App.Current.MainPage = new LoginPage();
         }
 
-
         public async void GetData()
         {
             UserList.Clear();
@@ -39,6 +37,10 @@ namespace PushY.ViewModels
                 {
                     UserList.Add(user);
                 }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Failed", "Something went wrong. try again later", "OK");
             }
         }
     }

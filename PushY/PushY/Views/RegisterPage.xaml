@@ -18,18 +18,27 @@
             Text="{Binding NickName}"
             Keyboard="Text"
             Placeholder="nickname"/>
-        <Label
-            x:Name="errorLabel"
-            TextColor="red"
-            Text=""
-            FontAttributes="Bold"/>
         <Button
             Text="Register"
             Margin="100,25"
             Command="{Binding RegisterCmd}"/>
-        <Button
-            Text="Login"
-            Margin="100,25"
-            Command="{Binding LoginCmd}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Text="Already have an accont? "
+                HorizontalOptions="End"
+                VerticalOptions="Center"/>
+            <Button
+                Text="Login"
+                WidthRequest="110"
+                Command="{Binding LoginCmd}"
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"/>
+        </Grid>
     </StackLayout>
 </ContentPage>

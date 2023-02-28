@@ -18,9 +18,24 @@
             Text="Login"
             Margin="100,25"
             Command="{Binding LoginCmd}"/>
-        <Button
-            Text="Register"
-            Margin="120,30"
-            Command="{Binding RegisterCmd}"/>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                Text="Don't have an account yet? "
+                HorizontalOptions="End"
+                VerticalOptions="Center"/>
+            <Button
+                Text="Register"
+                WidthRequest="110"
+                Command="{Binding RegisterCmd}"
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"/>
+        </Grid>
     </StackLayout>
 </ContentPage>
