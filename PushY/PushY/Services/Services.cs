@@ -33,7 +33,15 @@ namespace PushY.Services
             HandleApiCall apiCall = new HandleApiCall();
 
             var result = await apiCall.DoCall("AllUsers", await SecureStorage.GetAsync("UserId"));
-            users = JsonConvert.DeserializeObject<List<UserModel>>(result);
+
+            try
+            {
+                users = JsonConvert.DeserializeObject<List<UserModel>>(result);
+            }
+            catch (Exception)
+            {
+                await App.Current.MainPage.DisplayAlert("Failed", "Something went wrong. try again later", "OK");
+            }
 
             return users;
         }

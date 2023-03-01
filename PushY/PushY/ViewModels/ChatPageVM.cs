@@ -18,67 +18,35 @@ namespace PushY.ViewModels
         public Command BackCmd { get; private set; }
         public Command SendMessageCmd { get; private set; }
 
-        public ChatPageVM()
-        {
-            SendMessageCmd = new Command(ExecuteSendMessageCmd, CanClick);
-            block = false;
-        }
-
-        string _from_Id;
-        public string From_Id
+        private string _description;
+        public string Description
         {
             get
             {
-                return _from_Id;
+                return _description;
             }
             set
             {
-                SetProperty(ref _from_Id, value);
-                SendMessageCmd.ChangeCanExecute();
-            }
-        }
-
-        string _message;
-        public string Message
-        {
-            get
-            {
-                return _message;
-            }
-            set
-            {
-                SetProperty(ref _message, value);
-                SendMessageCmd.ChangeCanExecute();
-            }
-        }
-
-        string _to_Id;
-        public string To_Id
-        {
-            get
-            {
-                return _to_Id;
-            }
-            set
-            {
-                SetProperty(ref _to_Id, value);
+                SetProperty(ref _description, value);
                 SendMessageCmd.ChangeCanExecute();
             }
         }
 
         private bool CanClick()
         {
-            return (!string.IsNullOrEmpty(_message));
+            return (!string.IsNullOrEmpty(_description));
         }
 
         public ChatPageVM(UserChatModel chatModel)
         {
             UserChatList = new ObservableCollection<UserChatModel>();
 
+            myModel = new UserChatModel();
             myModel = chatModel;
 
             BackCmd = new Command(ExecuteBackCmd);
-            SendMessageCmd = new Command(ExecuteSendMessageCmd);
+            SendMessageCmd = new Command(ExecuteSendMessageCmd, CanClick);
+            block = false;
         }
 
         public void ExecuteBackCmd()
@@ -95,9 +63,9 @@ namespace PushY.ViewModels
 
             UserChatModel model = new UserChatModel
             {
-                From_Id = _from_Id,
-                Message = _message,
-                To_Id = _to_Id,
+                From_Id = App.UserId,
+                Message = _description,
+                To_Id = myModel.To_Id
             };
             var result = await Services.Services.SendMessage(model);
 
@@ -109,14 +77,14 @@ namespace PushY.ViewModels
             {
                 try
                 {
-                    await SecureStorage.SetAsync("UserId", result);
-                    App.Current.MainPage = new UserListPage();
+
                 }
                 catch (Exception ex)
                 {
                     await App.Current.MainPage.DisplayAlert("Error", "er is iets mis, pech", "OK");
                 }
             }
+            block = false;
         }
 
         public async void GetData()
